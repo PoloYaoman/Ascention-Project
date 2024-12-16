@@ -1,12 +1,14 @@
 
 #ifndef GAME 
-#define GAME 
+#define GAME 0
 
 /*Game controller*/
 
 
-#include "./Player.HC"
-#include "./Room.HC"
+//Cd(__DIR__);;
+
+#include "classes/Player.HC"
+#include "classes/Room.HC"
 
 
 union Game {
@@ -16,9 +18,9 @@ Room* room;
 $ID,-2$};
 
 U0 InitGame(Game* game) {
-$ID,2$game->you = InitPlayer();
+$ID,2$game->you = InitPlayer();
 game->room = InitRoom(NULL);
-game->rnum = 1;
+//game->rnum = 1;
 "Path has begun\n";
 $ID,-2$}
 

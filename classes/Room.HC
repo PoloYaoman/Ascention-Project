@@ -5,11 +5,13 @@
 /*Room controller*/
 
 
-#include "./Descriptor.HC"
+//Cd(__DIR__);;
+
+#include "classes/Descriptor.HC"
 
 
 union Room {
-$ID,2$/* Essentially a linked list */
+$ID,2$/* Essentially a linked list */
 I32 num;
 Room* lastRoom;
 Room* nextRoom;
@@ -25,7 +27,7 @@ if (l_room!=NULL) {
 $ID,2$l_room->nextRoom = r;
 $ID,-2$}
 r->description = GenRoomDescription();
-r->visited = 0;
+/*r->visited = 0;*/
 "Room materialised\n";
 return r;
 $ID,-2$}

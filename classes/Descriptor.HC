@@ -2,9 +2,10 @@
 #ifndef DESC 
 #define DESC 0
 
-Cd(__DIR__);;
 
-#include "../utilities/concat.HC"
+//Cd(__DIR__);;
+
+#include "./utilities/concat.HC"
 
 
 $ID,2$$ID,-2$#define RD_NUM 10
@@ -51,7 +52,7 @@ $ID,2$("reminds you of home", 100/RD_NUM);
 $ID,-2$$ID,-2$}
 
 Descriptor RoomsDesc[RD_NUM];
-FillRoomsDesc[RoomsDesc];
+FillRoomsDesc(RoomsDesc);
 
 $ID,2$$ID,-2$I64 GenRoomDescription() {
 $ID,2$I64 newDesc;
@@ -63,7 +64,6 @@ if (RoomsDesc[ind].prob <= tprob) {
 $ID,2$if (i==0) {
 $ID,2$newDesc = Concat("This room ",RoomsDesc[ind].desc);
 newDesc = Concat(newDesc, ". ");
-i++;
 $ID,-2$} else {
 $ID,2$switch(Abs(RandI64 %3)) {
 $ID,2$case 0:
@@ -79,11 +79,10 @@ $ID,2$newDesc = Concat("However, it ",RoomsDesc[ind].desc);
 newDesc = Concat(newDesc, ". ");
 break;
 $ID,-2$$ID,-2$}
-i++;
+$ID,-2$}
+i++;
 $ID,-2$}
 $ID,-2$}
-$ID,-2$}
-newDesc += '\n';
 return newDesc;
 $ID,-2$}
 
