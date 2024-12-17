@@ -18,10 +18,11 @@ I64 desc;
 I64 prob;
 $ID,-2$};
 
-Descriptor InitDescriptor(I64 d, I64 p) {
-$ID,2$Descriptor ndesc;
-ndesc.desc = d;
-ndesc.prob = p;
+Descriptor* InitDescriptor(I64 d, I64 p) {
+$ID,2$Descriptor* ndesc = MAlloc(sizeof(Descriptor));
+StrCpy(&ndesc->desc,d);
+ndesc->prob = p;
+"New descriptor: %s, %d\n", ndesc->desc, ndesc->prob;
 return ndesc;
 $ID,-2$}
 
@@ -46,17 +47,24 @@ $ID,2$("is messy", 60);
 $ID,-2$rd[7] = InitDescriptor
 $ID,2$("has an aura that weighs heavy on your soul", 50);
 $ID,-2$rd[8] = InitDescriptor
-$ID,2$("will probably oison your soul if you remain here long enough", 100/RD_NUM);
+$ID,2$("will probably oison your soul if you remain here long enough", 10);
 $ID,-2$rd[9] = InitDescriptor
-$ID,2$("reminds you of home", 100/RD_NUM);
-$ID,-2$$ID,-2$}
+$ID,2$("reminds you of home", 30);
+$ID,-2$//"First descriptor: %s, %d\n", rd[0].desc, rd[0].prob;
+$ID,-2$$ID,-2$$ID,2$}
 
-Descriptor RoomsDesc[RD_NUM];
+Descriptor* RoomsDesc[RD_NUM];
 FillRoomsDesc(RoomsDesc);
+
+/*I32 i=0;
+while (i<RD_NUM) {
+$ID,2$"%d\n", i;
+i++;
+$ID,-2$}*/
 
 $ID,2$$ID,-2$I64 GenRoomDescription() {
 $ID,2$I64 newDesc;
-I32 i = 0;
+/*I32 i = 0;
 while (i<3) {
 $ID,2$I64 ind = Abs(RandI64 % 10);
 I64 tprob = Abs(RandI64 % 100);
@@ -80,9 +88,9 @@ newDesc = Concat(newDesc, ". ");
 break;
 $ID,-2$$ID,-2$}
 $ID,-2$}
-i++;
+i++;
 $ID,-2$}
-$ID,-2$}
+$ID,-2$}*/
 return newDesc;
 $ID,-2$}
 
