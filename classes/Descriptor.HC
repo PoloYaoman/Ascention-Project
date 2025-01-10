@@ -8,91 +8,87 @@
 #include "./utilities/concat.HC"
 
 
-$ID,2$$ID,-2$#define RD_NUM 10
+#define RD_NUM 10
 
 
-union Descriptor{
-$ID,2$/* This one will hold a random statement 
-and a probability of its occurence */
-I64 desc;
-I64 prob;
-$ID,-2$};
+class Descriptor{
+    /* This one will hold a random statement 
+    and a probability of its occurence */
+    U8* desc;
+    I64 prob;
+};
 
-Descriptor* InitDescriptor(I64 d, I64 p) {
-$ID,2$Descriptor* ndesc = MAlloc(sizeof(Descriptor));
-StrCpy(&ndesc->desc,d);
-ndesc->prob = p;
-"New descriptor: %s, %d\n", ndesc->desc, ndesc->prob;
-return ndesc;
-$ID,-2$}
+Descriptor* InitDescriptor(U8* d, I64 p) {
+    Descriptor* ndesc = MAlloc(sizeof(Descriptor));
+
+    ndesc->desc = d;
+    ndesc->prob = p;
+
+    //"New descriptor: %s, %d\n", ndesc->desc, ndesc->prob;
+    return ndesc;
+}
 
 
 /*Descriptors for rooms*/
 
-U0 FillRoomsDesc(Descriptor* rd) {
-$ID,2$rd[0] = InitDescriptor
-$ID,2$("is bright, but you cannot identify the light source", 50);
-$ID,-2$rd[1] = InitDescriptor
-$ID,2$("is perfectly forgettable", 30);
-$ID,-2$rd[2] = InitDescriptor
-$ID,2$("feels cold", 70);
-$ID,-2$rd[3] = InitDescriptor
-$ID,2$("fills you with a sentiment of belonging", 20);
-$ID,2$$ID,-2$$ID,-2$rd[4] = InitDescriptor
-$ID,2$("smells like smoke", 40);
-$ID,-2$rd[5] = InitDescriptor
-$ID,2$("is shaped impractically for furnishing", 40);
-$ID,-2$rd[6] = InitDescriptor
-$ID,2$("is messy", 60);
-$ID,-2$rd[7] = InitDescriptor
-$ID,2$("has an aura that weighs heavy on your soul", 50);
-$ID,-2$rd[8] = InitDescriptor
-$ID,2$("will probably oison your soul if you remain here long enough", 10);
-$ID,-2$rd[9] = InitDescriptor
-$ID,2$("reminds you of home", 30);
-$ID,-2$//"First descriptor: %s, %d\n", rd[0].desc, rd[0].prob;
-$ID,-2$$ID,-2$$ID,2$}
+U0 FillRoomsDesc(Descriptor** rd) {
+    rd[0] = InitDescriptor
+        ("is bright, but you cannot identify the light source", 50);
+    rd[1] = InitDescriptor
+        ("is perfectly forgettable", 30);
+    rd[2] = InitDescriptor
+        ("feels cold", 70);
+    rd[3] = InitDescriptor
+        ("fills you with a sentiment of belonging", 20);
+    rd[4] = InitDescriptor
+        ("smells like smoke", 40);
+    rd[5] = InitDescriptor
+        ("is shaped impractically for furnishing", 40);
+    rd[6] = InitDescriptor
+        ("is messy", 60);
+    rd[7] = InitDescriptor
+        ("has an aura that weighs heavy on your soul", 50);
+    rd[8] = InitDescriptor
+        ("will probably oison your soul if you remain here long enough", 10);
+    rd[9] = InitDescriptor
+        ("reminds you of home", 30);
+    //"First descriptor: %s, %d\n", rd[0].desc, rd[0].prob;
+}
 
 Descriptor* RoomsDesc[RD_NUM];
 FillRoomsDesc(RoomsDesc);
 
-/*I32 i=0;
-while (i<RD_NUM) {
-$ID,2$"%d\n", i;
-i++;
-$ID,-2$}*/
-
-$ID,2$$ID,-2$I64 GenRoomDescription() {
-$ID,2$I64 newDesc;
-/*I32 i = 0;
-while (i<3) {
-$ID,2$I64 ind = Abs(RandI64 % 10);
-I64 tprob = Abs(RandI64 % 100);
-if (RoomsDesc[ind].prob <= tprob) {
-$ID,2$if (i==0) {
-$ID,2$newDesc = Concat("This room ",RoomsDesc[ind].desc);
-newDesc = Concat(newDesc, ". ");
-$ID,-2$} else {
-$ID,2$switch(Abs(RandI64 %3)) {
-$ID,2$case 0:
-$ID,2$newDesc = Concat("It ", RoomsDesc[ind].desc);
-newDesc = Concat(newDesc, ". ");
-break;
-$ID,-2$case 1:
-$ID,2$newDesc = Concat("It also ",RoomsDesc[ind].desc);
-newDesc = Concat(newDesc, ". ");
-break;
-$ID,-2$case 2:
-$ID,2$newDesc = Concat("However, it ",RoomsDesc[ind].desc);
-newDesc = Concat(newDesc, ". ");
-break;
-$ID,-2$$ID,-2$}
-$ID,-2$}
-i++;
-$ID,-2$}
-$ID,-2$}*/
-return newDesc;
-$ID,-2$}
+I64 GenRoomDescription() {
+    I64 newDesc;
+    I32 i = 0;
+    while (i<3) {
+        I64 ind = Abs(RandI64 % 10);
+        I64 tprob = Abs(RandI64 % 100);
+        if (RoomsDesc[ind]->prob <= tprob) {
+            if (i==0) {
+                newDesc = Concat("This room ",RoomsDesc[ind]->desc);
+                newDesc = Concat(newDesc, ". ");
+            } else {
+                switch(Abs(RandI64 %3)) {
+                    case 0:
+                        newDesc = Concat("It ", RoomsDesc[ind]->desc);
+                        newDesc = Concat(newDesc, ". ");
+                        break;
+                    case 1:
+                        newDesc = Concat("It also ", RoomsDesc[ind]->desc);
+                        newDesc = Concat(newDesc, ". ");
+                        break;
+                    case 2:
+                        newDesc = Concat("However, it ", RoomsDesc[ind]->desc);
+                        newDesc = Concat(newDesc, ". ");
+                        break;
+                }
+            }
+            i++;
+        }
+    }
+    return newDesc;
+}
 
 
 #endif

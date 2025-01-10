@@ -7,30 +7,33 @@
 
 //Cd(__DIR__);;
 
-#include "classes/Descriptor.HC"
+#include "utilities/rooms_lib.HC"
 
 
-union Room {
-$ID,2$/* Essentially a linked list */
-I32 num;
-Room* lastRoom;
-Room* nextRoom;
-I64 description;
-Bool visited;
-$ID,-2$};
+class Room {
+    /* Essentially a linked list */
+
+    I32 num;
+    Room* lastRoom;
+    Room* nextRoom;
+    U8* description;
+    Bool visited;
+};
 
 Room* InitRoom(Room* l_room) {
-$ID,2$Room* r = MAlloc(sizeof(Room));
-r->lastRoom = l_room;
-r->nextRoom = NULL;
-if (l_room!=NULL) {
-$ID,2$l_room->nextRoom = r;
-$ID,-2$}
-r->description = GenRoomDescription();
-/*r->visited = 0;*/
-"Room materialised\n";
-return r;
-$ID,-2$}
+    /*Linking adjacent rooms and setting the visited flag*/
+
+    Room* r = MAlloc(sizeof(Room));
+    r->lastRoom = l_room;
+    r->nextRoom = NULL;
+    if (l_room!=NULL) {
+        l_room->nextRoom = r;
+    }
+
+    r->description = GenRoomDescription();
+    r->visited = 0;
+    return r;
+}
 
 
 #endif 
