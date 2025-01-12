@@ -18,6 +18,9 @@ class Room {
     Room* nextRoom;
     U8* description;
     Bool visited;
+
+    I64 num_objects;
+    Object** objects;
 };
 
 Room* InitRoom(Room* l_room) {
@@ -30,7 +33,7 @@ Room* InitRoom(Room* l_room) {
         l_room->nextRoom = r;
     }
 
-    r->description = GenRoomDescription();
+    GenRoomDescription(r);
     r->visited = 0;
     return r;
 }

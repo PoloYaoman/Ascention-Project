@@ -12,6 +12,7 @@
 
 
 class Game {
+    Bool on;
     I32 rnum;
     Player* you;
     Room* room;
@@ -19,6 +20,7 @@ class Game {
 
 Game* InitGame() {
     Game* ngame = MAlloc(sizeof(Game));
+    ngame->on = 1;
     ngame->you = InitPlayer();
     ngame->room = InitRoom(NULL);
     ngame->rnum = 1;
@@ -64,17 +66,22 @@ U0 EnterRoom (Game* g, I64 rn = 0) {
 
 U0 NextAction(Game* g) {
     "\nWhat will you do?\n";
-    "1: Go through a door\n2: Exit the dream\n";
+    "1: Go through a door\n\n";
 
     I64 A = GetI64;
-    "action : %d\n", A;
+    "/n";
 
     switch(A) {
+        case 0:
+            g->on = 0;
+            break;
+
         case 1:
             "1: First door\n2: Second door\n";
             I64 A2 = GetI64;
             EnterRoom(g,A2);
             break;
+            
         default:
             "We know not of such actions\n";
             break;
