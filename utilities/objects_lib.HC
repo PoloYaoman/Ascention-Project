@@ -22,6 +22,7 @@ U8* objects[OBJ_NUM] = {
     "a key"
 };
 
+
 U0 InsObjects (Room* r) {
     I64 num_obj = 0;
     while (num_obj < r->num_objects) {
