@@ -20,30 +20,35 @@ U8* Find(U8* text, U8* ref) {
         U8* t = text;
         U8* r = ref;
         while (*t!='\0' && *r!='\0' && *t==*r) {
-            t++; n++;
+            t++; 
+            r++;
         }
-        if (*n=='\0') {
+        if (*r=='\0') {
             return text;
         }
     }
 
-    return NULL
+    return NULL;
 }
 
 
-U0 FindAndReplace (U8* text, U8* ref, U8* instr) { //TODO
+U8* FindAndReplace (U8* text, U8* ref, U8* instr) { //TODO
     if (!text || !ref || !instr) {
-        return;
+        return NULL;
     }
 
     U8* n_text = MAlloc(StrLen(text)+StrLen(instr)-StrLen(ref)+1);
-    U8* ptr = n_text
-
+    U8* ptr = n_text;
     U8* found = Find(text, ref);
+
     MemCpy(ptr, text, StrLen(text)-StrLen(found));
     ptr += StrLen(text)-StrLen(found);
     MemCpy(ptr, instr, StrLen(instr));
     ptr += StrLen(instr);
+    found += StrLen(ref);
+    MemCpy(ptr, found, StrLen(found));
+
+    return n_text;
 }
 
 

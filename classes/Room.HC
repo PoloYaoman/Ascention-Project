@@ -5,7 +5,7 @@
 /*Room controller*/
 
 
-#include "utilities/rooms_lib.HC"
+#include "classes/Object.HC"
 
 
 class Room {
@@ -20,6 +20,10 @@ class Room {
     I64 num_objects;
     Object** objects;
 };
+
+
+#include "utilities/rooms_lib.HC"
+
 
 Room* InitRoom(Room* l_room) {
     /*Linking adjacent rooms and setting the visited flag*/

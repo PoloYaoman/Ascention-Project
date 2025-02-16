@@ -1,17 +1,11 @@
-class Person
-{
-  U8 *name;
-  I64 age;
-};
 
-Person* PersonNew(U8 *name, I64 age=40)
-{
-  Person *p = MAlloc(sizeof(Person));
-  p->name = name;
-  p->age = age;
-  return p;
-}
+Cd(__DIR__);;
 
-I64 i = 10;
-Person* p = PersonNew("Terry",42);
-"%d %s => %d",i,p->name,p->age;
+#include "string_ops.HC"
+
+U8* text = "This is a big text\n";
+U8* ref = "big";
+U8* instr = "small";
+
+text = FindAndReplace(text, ref, instr);
+"%s", text;

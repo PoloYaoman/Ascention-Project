@@ -6,11 +6,14 @@
 #define OBJ_NUM 3
 
 
-class Room {};
+// class Room {
+//     I64 num_objects;
+//     U8* description;
+// };
 
+#include "classes/Room.HC"
 #include "classes/Object.HC"
 #include "utilities/string_ops.HC"
-#include "classes/Room.HC"
 
 
 U8* objects[OBJ_NUM] = {
@@ -21,10 +24,11 @@ U8* objects[OBJ_NUM] = {
 
 U0 InsObjects (Room* r) {
     I64 num_obj = 0;
-    while (num < r->num_objects) {
+    while (num_obj < r->num_objects) {
         I64 ind = Abs(RandI64 % OBJ_NUM);
         Object* n_obj = initObject(objects[ind]);
-        FindAndReplace(r->desc, "[o]", n_obj->name);
+        r->description = FindAndReplace(r->description, "[o]", n_obj->name);
+        num_obj++;
     }
 }
 

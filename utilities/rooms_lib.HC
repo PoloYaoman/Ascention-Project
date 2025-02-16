@@ -30,7 +30,8 @@ U0 GenRoomDescription(Room* r) {
         " There are two doors, opposite of each other.\n");
     r->description = desc;
 
-    I64 r_obj = room_obj_attributes[ind];
+    r->num_objects = room_obj_attributes[ind];
+    I64 r_obj = r->num_objects;
     while (r_obj>0) {
         InsObjects(r);
         r_obj--;
