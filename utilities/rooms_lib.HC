@@ -4,8 +4,9 @@
 
 
 #include "utilities/string_ops.HC"
-#include "utilities/objects.HC"
 #include "classes/Object.HC"
+#include "classes/Room.HC"
+#include "utilities/objects_lib.HC"
 
 #define NUM_ROOMS 3
 
@@ -17,7 +18,7 @@ U8* rooms[NUM_ROOMS] = {
     "This room is so weirdly shaped that you can't quite count the number of corners in it. Near the wall to the right of you, you spot [o]."
 };
 
-I64 room_obj_attributes[NUM_ROOMS] {
+I64 room_obj_attributes[NUM_ROOMS] = {
     0,
     0,
     1

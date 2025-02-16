@@ -5,8 +5,6 @@
 /*Room controller*/
 
 
-//Cd(__DIR__);;
-
 #include "utilities/rooms_lib.HC"
 
 

@@ -1,7 +1,6 @@
 
 Cd(__DIR__);;
 
-#include "classes/Descriptor.HC"
 #include "classes/Room.HC"
 #include "classes/Player.HC"
 #include "classes/Game.HC"
@@ -14,7 +13,7 @@ U0 Main() {
     CDC *dc = DCAlias;
     SettingsPush;
 
-    Game* newGame = InitGame();
+    Game* newGame = InitGame();
 
     EnterRoom(newGame);
 
