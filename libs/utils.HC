@@ -1,9 +1,17 @@
 
-#ifndef STR_OPS 
-#define STR_OPS 0
+#ifndef UTILS
+#define UTILS 0
+
+
+/*
+    A collection of useful functions
+    Mostly string ops
+*/
 
 
 U8* Concat (U8* s1, U8* s2) {
+    // Concatenates s1 and s2
+
     U8* ns = MAlloc(StrLen(s1)+StrLen(s2)+1);
     MemCpy(ns, s1, StrLen(s1));
     MemCpy(ns+StrLen(s1), s2, StrLen(s2)+1);
@@ -12,6 +20,8 @@ U8* Concat (U8* s1, U8* s2) {
 
 
 U8* Find(U8* text, U8* ref) {
+    // Returns pointer to the first character of ref in text
+
     if (*ref == '\0') {
         return NULL;
     }
@@ -32,8 +42,12 @@ U8* Find(U8* text, U8* ref) {
 }
 
 
-U8* FindAndReplace (U8* text, U8* ref, U8* instr) { //TODO
+U8* FindAndReplace (U8* text, U8* ref, U8* instr) {
+    // Finds ref in text and replaces with instr
+    // Returns NULL if no occurences found
+
     if (!text || !ref || !instr) {
+        "One of the instructions doesn't exist";
         return NULL;
     }
 
@@ -41,12 +55,15 @@ U8* FindAndReplace (U8* text, U8* ref, U8* instr) { //TODO
     U8* ptr = n_text;
     U8* found = Find(text, ref);
 
-    MemCpy(ptr, text, StrLen(text)-StrLen(found));
-    ptr += StrLen(text)-StrLen(found);
-    MemCpy(ptr, instr, StrLen(instr));
-    ptr += StrLen(instr);
-    found += StrLen(ref);
-    MemCpy(ptr, found, StrLen(found));
+    Bool fnd = (found!=NULL);
+    if (fnd) {
+        MemCpy(ptr, text, StrLen(text)-StrLen(found));
+        ptr += StrLen(text)-StrLen(found);
+        MemCpy(ptr, instr, StrLen(instr));
+        ptr += StrLen(instr);
+        found += StrLen(ref);
+        MemCpy(ptr, found, StrLen(found));
+    }
 
     return n_text;
 }

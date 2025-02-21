@@ -2,10 +2,12 @@
 #ifndef GAME 
 #define GAME 0
 
-/*Game controller*/
 
+/*
+    Game controller
+    Tracks game status
+*/
 
-//Cd(__DIR__);;
 
 #include "classes/Player.HC"
 #include "classes/Room.HC"
@@ -13,63 +15,78 @@
 
 class Game {
     Bool on;
-    I32 rnum;
     Player* you;
     Room* room;
 };
 
+
 Game* InitGame() {
+    // Starts the game
+
     Game* ngame = MAlloc(sizeof(Game));
     ngame->on = 1;
-    ngame->you = InitPlayer();
+
+    // ngame->you = InitPlayer();
+    // if (ngame->you == NULL) {
+    //     "\nYou failed to materialise\n";
+    //     return NULL;
+    // }
+
     ngame->room = InitRoom(NULL);
-    ngame->rnum = 1;
+    if (ngame->you == NULL) {
+        "\nThe room failed to materialise\n";
+        return NULL;
+    }
+
     return ngame;
 }
 
 
-U0 EnterRoom (Game* g, I64 rn = 0) {
-    /*Prints description of the current room*/
+U0 EnterRoom(Game* game, I32 rn=0) {
+    // Prints entered room description
+    // Creates a room if it doesn't exist yet
 
-    "\n";    
+    "\n\n";    
     if (rn == 0) {
-        "You wake up in a room, but you do not remember how you got here.\n";
-        "%s", g->room->description;
-        g->room->visited = 1;
+        "You wake up in a room, but you do not remember how you got here.\n\n";
+        "%s", game->room->description;
     } else if (rn == 1) {
-        if (g->room->lastRoom != NULL) {
-            g->room = g->room->lastRoom;
+        if (game->room->lastRoom != NULL) {
+            game->room = game->room->lastRoom;
             "You return to the other room.\n"
-            "%s", g->room->description;
+            "%s", game->room->description;
         } else {
             "There is nothing behind the door. You decide to remain here.\n"
-            "%s", g->room->description;
+            "%s", game->room->description;
         }
     } else if (rn == 2) {
-        if (g->room->nextRoom != NULL) {
-            g->room = g->room->nextRoom;
+        if (game->room->nextRoom != NULL) {
+            game->room = game->room->nextRoom;
             "You have already been to this room\n";
-            "%s", g->room->description;
+            "%s", game->room->description;
         } else {
-            g->room->nextRoom = InitRoom(g->room);
-            g->room = g->room->nextRoom;
+            game->room->nextRoom = InitRoom(game->room);
+            game->room = game->room->nextRoom;
             "You enter a new room\n";
-            "%s", g->room->description;
-            g->room->visited = 1;
-            g->rnum++;
+            "%s", game->room->description;
         }
     } else {
         "There is no such door.\n";
     }
+    "\n\n";
+    return;
 }
 
 
 U0 NextAction(Game* g) {
-    "\nWhat will you do?\n";
-    "1: Go through a door\n\n";
+    // Lets you pick the next action
+
+    "\nWhat will you do?\n\n";
+    "1: Go through a door\n";
+    "0: End experience\n";
 
     I64 A = GetI64;
-    "/n";
+    "\n";
 
     switch(A) {
         case 0:
@@ -86,7 +103,18 @@ U0 NextAction(Game* g) {
             "We know not of such actions\n";
             break;
     }
+
+    return;
 }
+
+
+// U0 FreeGame(Game* game) {
+//     // Clears the game
+//     FreePlayer(game->you);
+//     FreeRoom(game->room);
+//     Free(game);
+//     return;
+// }
 
 
 #endif
