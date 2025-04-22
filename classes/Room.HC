@@ -56,9 +56,23 @@ U0 ListObjects(Room* r) {
     }
 }
 
-U0 Examine(Room* r, I32 obj) {
-    // Displays object descriptions
+U0 removeObjectRoom (Room* r, U8* obj) {
+    // Removes sentence containing object and counts down 
+    // their number
+    
+    U8* o_loc = Find(r->description, obj);
 
+    U8* last_point = o_loc;
+    while (last_point != NULL || last_point != '.') {
+        last_point++;
+    }
+    
+    while (last_point !=NULL || last_point != '.') {
+        last_point--;
+        Free(last_point+1);
+    }
+
+    r->num_objects--;
 }
 
 

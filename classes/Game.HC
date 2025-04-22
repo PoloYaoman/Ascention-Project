@@ -26,11 +26,11 @@ Game* InitGame() {
     Game* ngame = MAlloc(sizeof(Game));
     ngame->on = 1;
 
-    // ngame->you = InitPlayer();
-    // if (ngame->you == NULL) {
-    //     "\nYou failed to materialise\n";
-    //     return NULL;
-    // }
+    ngame->you = InitPlayer();
+    if (ngame->you == NULL) {
+        "\nYou failed to materialise\n";
+        return NULL;
+    }
 
     ngame->room = InitRoom(NULL);
     if (ngame->you == NULL) {
@@ -83,6 +83,7 @@ U0 NextAction(Game* g) {
 
     "\nWhat will you do?\n\n";
     if (g->room->objects != NULL) {
+        "4: Pick up an object\n";
         "2: Examine an object\n";
     }
     "1: Go through a door\n";
@@ -106,11 +107,18 @@ U0 NextAction(Game* g) {
             ListObjects(g->room);
             I64 A2 = GetI64;
             if (A2 <= g->room->num_objects) {
-                "%s\n", g->room->objects[A2-1]->description;
+                "\n%s\n", g->room->objects[A2-1]->description;
             } else {
                 "There is no such thing here\n";
             }
             break;
+
+        case 3:
+            ListObjects(g->room);
+            I64 A3 = GetI64;
+            if (A3 <= g->room->num_objects) {
+                PickObject(g->you, g->room, A3);
+            }
             
         default:
             "This action is not in the texts\n";

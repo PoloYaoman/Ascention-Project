@@ -24,22 +24,27 @@ U8* objects[OBJ_NUM] = {
 };
 
 
-U8** obj_descriptions[ODESC_NUM] = {
-    {
-        "$$GREEN$$This chalice is carved out of wood. There is a deep rack on the side of it.$$BLUE$$",
-        "$$GREEN$$This chalice looks like it's made out of gold, but once you pick it up you realise it is too light to be a precious metal.$$BLUE$$",
-        "$$GREEN$$This chalice is warm to the touch.$$BLUE$$"
-    },
-    {
-        "$$GREEN$$The note doesn't say anything, but has a drawing of a river and a bridge, coloured in crayons.$$BLUE$$",
-        "$$GREEN$$You recognise your own handwriting, but not the words.$$BLUE$$",
-        "$$GREEN$$The note says 'Will be late. Dinner is in the fridge.'$$BLUE$$"
-    },
-    {
-        "$$GREEN$$This key is rusted to the core and is unlikely to open anything.$$BLUE$$",
-        "$$GREEN$$This key has a tag on it, which says it belongs to a certain Sarah.$$BLUE$$",
-        "$$GREEN$$You recognise that this is a key, but the shapeof it sure is strange.$$BLUE$$"
-    }
+U8* o1_desc[ODESC_NUM] = {
+    "$$GREEN$$This chalice is carved out of wood. There is a deep rack on the side of it.$$BLUE$$",
+    "$$GREEN$$This chalice looks like it's made out of gold, but once you pick it up you realise it is too light to be a precious metal.$$BLUE$$",
+    "$$GREEN$$This chalice is warm to the touch.$$BLUE$$"
+};
+
+U8* o2_desc[ODESC_NUM] = {
+    "$$GREEN$$The note doesn't say anything, but has a drawing of a river and a bridge, coloured in crayons.$$BLUE$$",
+    "$$GREEN$$You recognise your own handwriting, but not the words.$$BLUE$$",
+    "$$GREEN$$The note says 'Will be late. Dinner is in the fridge.'$$BLUE$$"
+};
+
+U8* o3_desc[ODESC_NUM] = {
+    "$$GREEN$$This key is rusted to the core and is unlikely to open anything.$$BLUE$$",
+    "$$GREEN$$This key has a tag on it, which says it belongs to a certain Sarah.$$BLUE$$",
+    "$$GREEN$$You recognise that this is a key, but the shape of it sure is strange.$$BLUE$$"
+};
+
+
+U8** obj_descriptions[OBJ_NUM] = {
+    o1_desc, o2_desc, o3_desc
 };
 
 
@@ -52,6 +57,7 @@ U0 FillObjects (Room* r) {
         r->num_objects++;
 
         I32 indd = Abs(RandI64 % ODESC_NUM);
+        "descriptor picked: %s\n", obj_descriptions[ind][indd];
         r->objects = addObject(r->objects, initObject(objects[ind],obj_descriptions[ind][indd]));
     }
     return;

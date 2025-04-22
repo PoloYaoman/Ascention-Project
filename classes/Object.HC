@@ -50,6 +50,17 @@ Object** addObject(Object** list, Object* obj) {
     return n_array;
 }
 
+U0 removeObject(Object** list, I64 ind) {
+    // Removes object at ind and pushes back following items
+
+    I64 i = ind;
+    while (list[i+1] != NULL) {
+        list[i] = list[i+1];
+        i++;
+    }
+    Free(list[i]);
+}
+
 
 // U0 FreeObject(Object* obj) {
 //     // Clears the object
