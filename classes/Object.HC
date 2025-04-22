@@ -14,7 +14,7 @@ class Object {
 };
 
 
-Object* initObject(U8* name, U8* desc = "") {
+Object* initObject(U8* name, U8* desc = "\n") {
     // Creates a new object
 
     Object* nobj = MAlloc(sizeof(Object));
@@ -27,11 +27,26 @@ Object* initObject(U8* name, U8* desc = "") {
 Object** addObject(Object** list, Object* obj) {
     // Adds an object to an existing list
 
-    Object** n_array = MAlloc(MSize(list)+sizeof(Object));
-    Object** ptr = n_array;
-    MemCpy(ptr, list, MSize(list));
-    ptr += MSize(list);
-    MemCpy(ptr, &obj, MSize(obj));
+    Object** n_array;
+
+    if (list != NULL) {
+        n_array = MAlloc(MSize(list)+sizeof(Object*));
+        "Memory allocated\n";
+        MemCpy(n_array, list, MSize(list));
+        "Initial list copied\n";
+        MemCpy(n_array+MSize(list), &obj, sizeof(Object*));
+        "Object added\n";
+    } else {
+        n_array = MAlloc(sizeof(Object*));
+        *n_array = obj;
+    }
+ 
+    // I32 i = 0;
+    // while (n_array[i]->name != NULL) {
+    //     "\nNew object : %s\n", n_array[i]->name;
+    //     i++;
+    // }
+
     return n_array;
 }
 

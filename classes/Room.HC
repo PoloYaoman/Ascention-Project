@@ -4,8 +4,8 @@
 
 
 /*
-Room controller
-Essentially creates and navigates a linked list
+    Room controller
+    Essentially creates and navigates a linked list
 */
 
 
@@ -33,6 +33,7 @@ Room* InitRoom(Room* l_room) {
     r->nextRoom = NULL;
     if (l_room!=NULL)   l_room->nextRoom = r;
     r->objects = NULL;
+    r->num_objects = 0;
 
     GenRoomDescription(r);
     if (r->description == NULL) {
@@ -41,6 +42,23 @@ Room* InitRoom(Room* l_room) {
     }
 
     return r;
+}
+
+
+U0 ListObjects(Room* r) {
+    // Lists names of objects in the room
+
+    I32 i = 0;
+    while (i < r->num_objects) {
+        "%d: ", i+1;
+        "%s\n", r->objects[i]->name;
+        i++;
+    }
+}
+
+U0 Examine(Room* r, I32 obj) {
+    // Displays object descriptions
+
 }
 
 

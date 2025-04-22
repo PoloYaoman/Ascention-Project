@@ -53,25 +53,25 @@ U0 EnterRoom(Game* game, I32 rn=0) {
     } else if (rn == 1) {
         if (game->room->lastRoom != NULL) {
             game->room = game->room->lastRoom;
-            "You return to the other room.\n"
+            "You return to the other room.\n\n"
             "%s", game->room->description;
         } else {
-            "There is nothing behind the door. You decide to remain here.\n"
+            "There is nothing behind the door. You decide to remain here.\n\n"
             "%s", game->room->description;
         }
     } else if (rn == 2) {
         if (game->room->nextRoom != NULL) {
             game->room = game->room->nextRoom;
-            "You have already been to this room\n";
+            "You have already been to this room\n\n";
             "%s", game->room->description;
         } else {
             game->room->nextRoom = InitRoom(game->room);
             game->room = game->room->nextRoom;
-            "You enter a new room\n";
+            "You enter a new room\n\n";
             "%s", game->room->description;
         }
     } else {
-        "There is no such door.\n";
+        "There is no such door.\n\n";
     }
     "\n\n";
     return;
@@ -82,6 +82,9 @@ U0 NextAction(Game* g) {
     // Lets you pick the next action
 
     "\nWhat will you do?\n\n";
+    if (g->room->objects != NULL) {
+        "2: Examine an object\n";
+    }
     "1: Go through a door\n";
     "0: End experience\n";
 
@@ -95,12 +98,22 @@ U0 NextAction(Game* g) {
 
         case 1:
             "1: First door\n2: Second door\n";
+            I64 A1 = GetI64;
+            EnterRoom(g,A1);
+            break;
+
+        case 2:
+            ListObjects(g->room);
             I64 A2 = GetI64;
-            EnterRoom(g,A2);
+            if (A2 <= g->room->num_objects) {
+                "%s\n", g->room->objects[A2-1]->description;
+            } else {
+                "There is no such thing here\n";
+            }
             break;
             
         default:
-            "We know not of such actions\n";
+            "This action is not in the texts\n";
             break;
     }
 
