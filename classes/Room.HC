@@ -56,23 +56,36 @@ U0 ListObjects(Room* r) {
     }
 }
 
-U0 removeObjectRoom (Room* r, U8* obj) {
+U8* removeObjectRoom (Room* r, U8* obj) {
     // Removes sentence containing object and counts down 
     // their number
     
     U8* o_loc = Find(r->description, obj);
 
-    U8* last_point = o_loc;
-    while (last_point != NULL || last_point != '.') {
+    U8* last_point = r->description;
+    U8* last_point_tmp = last_point;
+    while (*last_point != '\0') {
+        if (*last_point == '.') {
+            last_point_tmp = last_point+1;
+        } if (last_point == o_loc) {
+            last_point = last_point_tmp;
+            break;
+        }
         last_point++;
     }
     
-    while (last_point !=NULL || last_point != '.') {
-        last_point--;
-        Free(last_point+1);
+    U8* next_point = o_loc;
+    while (*next_point != '\0' && *next_point != '.') {
+        next_point++;
     }
 
+    U8* ndesc = MAlloc(StrLen(r->description)-StrLen(last_point)+StrLen(next_point)+1);
+    ndesc = MemCpy("", r->description, StrLen(r->description)-StrLen(last_point));
+    ndesc = Concat(ndesc, next_point);
+
     r->num_objects--;
+
+    return ndesc;
 }
 
 

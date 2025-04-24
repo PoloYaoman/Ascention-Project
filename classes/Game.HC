@@ -31,6 +31,7 @@ Game* InitGame() {
         "\nYou failed to materialise\n";
         return NULL;
     }
+    // "Hands occupied so far : %d\n", ngame->you->num_hands;
 
     ngame->room = InitRoom(NULL);
     if (ngame->you == NULL) {
@@ -43,7 +44,7 @@ Game* InitGame() {
 
 
 U0 EnterRoom(Game* game, I32 rn=0) {
-    // Prints entered room description
+    // Prints entered room description and inventory
     // Creates a room if it doesn't exist yet
 
     "\n\n";    
@@ -73,6 +74,9 @@ U0 EnterRoom(Game* game, I32 rn=0) {
     } else {
         "There is no such door.\n\n";
     }
+
+    DisplayInventory(game->you);
+
     "\n\n";
     return;
 }
@@ -83,11 +87,11 @@ U0 NextAction(Game* g) {
 
     "\nWhat will you do?\n\n";
     if (g->room->objects != NULL) {
-        "4: Pick up an object\n";
+        "3: Pick up an object\n";
         "2: Examine an object\n";
     }
     "1: Go through a door\n";
-    "0: End experience\n";
+    "$$GREY$$0: End experience$$BLUE$$\n";
 
     I64 A = GetI64;
     "\n";
@@ -117,8 +121,11 @@ U0 NextAction(Game* g) {
             ListObjects(g->room);
             I64 A3 = GetI64;
             if (A3 <= g->room->num_objects) {
-                PickObject(g->you, g->room, A3);
+                // "Hands occupied so far (1) : %d\n", g->you->num_hands;
+                PickObject(g->you, g->room, A3-1);
+                DisplayInventory(g->you);
             }
+            break;
             
         default:
             "This action is not in the texts\n";
