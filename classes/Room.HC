@@ -89,6 +89,17 @@ U8* removeObjectRoom (Room* r, U8* obj) {
 }
 
 
+Room* RoomPickObject (Room* r, I64 ind) {
+    Room* r_upd = r;
+    if (r_upd->objects[ind] != NULL) {
+        r_upd->description = removeObjectRoom(r_upd, r->objects[ind]->name);
+    }
+    r_upd->objects = removeObject(r_upd->objects, ind);
+    r_upd->num_objects--;
+    return r_upd;
+}
+
+
 // U0 FreeRoom(Room* room) {
 //     // Clears all rooms in the list
 

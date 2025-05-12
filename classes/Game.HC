@@ -9,9 +9,10 @@
 */
 
 
-#include "classes/Player.HC"
 #include "classes/Room.HC"
+#include "classes/Player.HC"
 
+//union Player{};
 
 class Game {
     Bool on;
@@ -121,9 +122,16 @@ U0 NextAction(Game* g) {
             ListObjects(g->room);
             I64 A3 = GetI64;
             if (A3 <= g->room->num_objects) {
-                // "Hands occupied so far (1) : %d\n", g->you->num_hands;
-                PickObject(g->you, g->room, A3-1);
-                DisplayInventory(g->you);
+                // "\nObject picked: %s\n", g->room->objects[A3-1]->name;
+                if (g->you->num_hands < 2) {
+                    g->you = PlayerPickObject(g->you, g->room->objects[A3-1]);
+                    DisplayInventory(g->you);
+                    g->room = RoomPickObject(g->room, A3-1);
+                } else {
+                    "\nYou don't have enough hands to carry that\n";
+                }
+            } else {
+                "\n There is no such thing here\n";
             }
             break;
             
