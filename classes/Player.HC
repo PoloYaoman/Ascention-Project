@@ -18,9 +18,9 @@
 // class Game{};
 
 
-union Player {
-    Object** inventory;
-    I64 num_hands;
+class Player {
+    Object* left_hand; 
+    Object* right_hand;
 };
 
 
@@ -28,35 +28,35 @@ Player* InitPlayer() {
     // Creates you
 
     Player* p = MAlloc(sizeof(Player));
-    p->inventory = NULL;
-    p->num_hands = 0;
+    p->left_hand = NULL; p->right_hand = NULL;
     return p;
 }
 
 
-Player* PlayerPickObject(Player* p, Object* obj) {
-    // Places an object into player's inventory
+U0 PlayerPickObject(Player* p, Object* obj) {
+    // Places an object in your inventory
     
-    Player* p_upd = p;
-    if (p_upd->num_hands < 2) {
-        p_upd->inventory = addObject(p_upd->inventory, obj);
-        "\nObject picked : %s\n", obj->name;
-        p_upd->num_hands++;
+    if (p->left_hand == NULL) {
+        p->left_hand = obj;
+        "You pick up %s with your left hand\n", obj->name;
+    } else if (p->right_hand == NULL) {
+        p->right_hand = obj;
+        "You pick up %s with your right hand\n", obj->name;
     } else {
         "\nYou don't have enough hands to carry that\n";
     }
-    return p_upd;
 }
 
 
 U0 DisplayInventory(Player* p) {
-    // "Hands occupied : %d\n", p->num_hands;
+    // Displays player's inventory
+
     if (p != NULL) {
-        if (p->num_hands > 0) {
-            "You are holding :\n\t%s in your left hand\n", p->inventory[0]->name;
+        if (p->left_hand != NULL) {
+            "You are holding :\n\t%s in your left hand\n", p->left_hand->name;
         } 
-        if (p->num_hands == 2) {
-            "\t%s in your right hand\n", p->inventory[1]->name;
+        if (p->right_hand != NULL) {
+            "\t%s in your right hand\n", p->right_hand->name;
         }
     }
 }
