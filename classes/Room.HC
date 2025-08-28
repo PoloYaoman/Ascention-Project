@@ -99,17 +99,44 @@ U0 RoomPickObject (Room* r, I64 ind) {
 }
 
 
-// U0 FreeRoom(Room* room) {
-//     // Clears all rooms in the list
+U0 FreeRoomUtil(Room* room) {
+    // Frees a single room
+    Free(room->description);
+    I32 i = room->num_objects-1;
+    for (i; i >= 0; i--) {
+        FreeObject(room->objects[i]);
+    }
+    Free(room);
+}
 
-//     while (room->lastRoom!=NULL)    room = room->lastRoom;
-//     while (room->nextRoom!=NULL) {
-//         room = room->nextRoom;
-//         Free(room->description);
-//         Free(room->lastRoom);
-//     }
-//     return;
-// }
+U0 FreeRoom(Room* room) {
+    // Clears all rooms in the list
+
+    if (room == NULL)   return;
+    if (room->lastRoom == NULL) {
+        if (room->nextRoom == NULL)   {
+            FreeRoomUtil(room);
+            return;
+        } else room = room->nextRoom;
+    } else {
+        while (room->lastRoom!=NULL) {
+            if (room->lastRoom->lastRoom != NULL) {
+                room = room->lastRoom;
+            } else {
+                FreeRoomUtil(room);
+                return;
+            }
+        }
+    }
+
+    while (room != NULL) {
+        FreeRoomUtil(room->lastRoom);
+        if (room->nextRoom!=NULL)   room = room->nextRoom;
+        else                        break;
+    }
+
+    // FreeRoomUtil(room);
+}
 
 
 #endif

@@ -24,6 +24,9 @@ U0 Main() {
     while(newGame->on) {
         NextAction(newGame);
     }
+
+    FreeGame(newGame);
+    SettingsPop;
 }
 
 Main;

@@ -69,13 +69,13 @@ U0 removeObject(Object*** list, I64 ind) {
 }
 
 
-// U0 FreeObject(Object* obj) {
-//     // Clears the object
+U0 FreeObject(Object* obj) {
+    // Clears the object
 
-//     Free(obj->name);
-//     Free(obj->description);
-//     Free(obj);
-// }
+    if (obj != NULL) {
+        Free(obj);
+    }
+}
 
 
 #endif

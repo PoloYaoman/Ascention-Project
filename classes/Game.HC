@@ -138,13 +138,12 @@ U0 NextAction(Game* g) {
 }
 
 
-// U0 FreeGame(Game* game) {
-//     // Clears the game
-//     FreePlayer(game->you);
-//     FreeRoom(game->room);
-//     Free(game);
-//     return;
-// }
+U0 FreeGame(Game* game) {
+    // Clears the game
+    FreePlayer(game->you);
+    FreeRoom(game->room);
+    Free(game);
+}
 
 
 #endif

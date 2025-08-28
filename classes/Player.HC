@@ -62,12 +62,13 @@ U0 DisplayInventory(Player* p) {
 }
 
 
-// U0 FreePlayer(Player* player) {
-//     // Clears you
+U0 FreePlayer(Player* player) {
+    // Clears you
 
-//     Free(player);
-//     return;
-// }
+    FreeObject(player->left_hand);
+    FreeObject(player->right_hand);
+    Free(player);
+}
 
 
 
