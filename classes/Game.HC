@@ -123,7 +123,7 @@ U0 NextAction(Game* g) {
             I64 A3 = GetI64;
             if (A3 <= g->room->num_objects) {
                 PlayerPickObject(g->you, g->room->objects[A3-1]);
-                g->room = RoomPickObject(g->room, A3-1);
+                RoomPickObject(g->room, A3-1);
             } else {
                 "\n There is no such thing here\n";
             }

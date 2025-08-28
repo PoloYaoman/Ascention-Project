@@ -2,6 +2,8 @@
 #ifndef OBJECT 
 #define OBJECT 0
 
+#include "libs/utils.HC"
+
 
 /*
     Object controller
@@ -24,38 +26,46 @@ Object* initObject(U8* name, U8* desc = "\n") {
 }
 
 
-Object** addObject(Object** list, Object* obj) {
+// Object** addObject(Object** list, Object* obj) {
+//     // Adds an object to an existing list
+
+//     Object** n_array;
+
+//     if (list != NULL) {
+//         n_array = MAlloc(MSize(list)+sizeof(Object*));
+//         MemCpy(n_array, list, MSize(list));
+//         MemCpy(n_array+MSize(list), &obj, sizeof(Object*));
+//     } else {
+//         n_array = MAlloc(sizeof(Object*));
+//         *n_array = obj;
+//     }
+
+//     return n_array;
+// }
+
+U0 addObject(Object*** list, Object* obj) {
     // Adds an object to an existing list
 
-    Object** n_array;
-
-    if (list != NULL) {
-        n_array = MAlloc(MSize(list)+sizeof(Object*));
-        MemCpy(n_array, list, MSize(list));
-        MemCpy(n_array+MSize(list), &obj, sizeof(Object*));
+    if (*list != NULL) {
+        *list = ReAlloc(list, MSize(list)+sizeof(Object*));
+        MemCpy(*list+MSize(*list), &obj, sizeof(Object*));
     } else {
-        n_array = MAlloc(sizeof(Object*));
-        *n_array = obj;
+        *list = MAlloc(sizeof(Object*));
+        **list = obj;
     }
-
-    return n_array;
 }
 
-Object** removeObject(Object** list, I64 ind) {
+U0 removeObject(Object*** list, I64 ind) {
     // Removes object at ind and pushes back following items
 
-    Object** nlist;
     I64 i = ind;
-    while (i<ind) {
-        addObject(nlist, list[i]);
+    Object* listp = (*list)[ind+1];
+    while (listp != NULL) {
+        (*list)[i] = listp;
         i++;
+        listp = (*list)[i+1];
     }
-    list = list+i;
-    while (*list != NULL) {
-        addObject(nlist, *list);
-        list++;
-    }
-    return nlist;
+    *list = ReAlloc(*list, MSize(*list)-sizeof(Object*));
 }
 
 

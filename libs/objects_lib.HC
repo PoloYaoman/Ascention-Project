@@ -57,7 +57,7 @@ U0 FillObjects (Room* r) {
         r->num_objects++;
 
         I32 indd = Abs(RandI64 % ODESC_NUM);
-        r->objects = addObject(r->objects, initObject(objects[ind],obj_descriptions[ind][indd]));
+        addObject(&(r->objects), initObject(objects[ind],obj_descriptions[ind][indd]));
     }
     return;
 }

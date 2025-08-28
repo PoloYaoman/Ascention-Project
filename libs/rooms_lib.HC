@@ -36,7 +36,6 @@ U0 GenRoomDescription(Room* r) {
         "\nThere are $$PURPLE$$two doors$$BLUE$$, opposite of each other.\n\n");
     r->description = desc;
     FillObjects(r);
-    return;
 }
 
 
