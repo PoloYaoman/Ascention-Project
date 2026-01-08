@@ -12,7 +12,6 @@
 #include "classes/Room.HC"
 #include "classes/Player.HC"
 
-//union Player{};
 
 class Game {
     Bool on;
@@ -72,9 +71,7 @@ U0 EnterRoom(Game* game, I32 rn=0) {
             "You enter a new room\n\n";
             "%s", game->room->description;
         }
-    } else {
-        "There is no such door.\n\n";
-    }
+    } else  "There is no such door.\n\n";
 
     DisplayInventory(game->you);
 
@@ -87,6 +84,7 @@ U0 NextAction(Game* g) {
     // Lets you pick the next action
 
     "\nWhat will you do?\n\n";
+    "4: View inventory\n";
     if (g->room->objects != NULL) {
         "3: Pick up an object\n";
         "2: Examine an object\n";
@@ -111,11 +109,8 @@ U0 NextAction(Game* g) {
         case 2:
             ListObjects(g->room);
             I64 A2 = GetI64;
-            if (A2 <= g->room->num_objects) {
-                "\n%s\n", g->room->objects[A2-1]->description;
-            } else {
-                "There is no such thing here\n";
-            }
+            if (A2 <= g->room->num_objects) "\n%s\n", g->room->objects[A2-1]->description;
+            else                            "There is no such thing here\n";
             break;
 
         case 3:
@@ -124,9 +119,11 @@ U0 NextAction(Game* g) {
             if (A3 <= g->room->num_objects) {
                 PlayerPickObject(g->you, g->room->objects[A3-1]);
                 RoomPickObject(g->room, A3-1);
-            } else {
-                "\n There is no such thing here\n";
-            }
+            } else  "\n There is no such thing here\n";
+            break;
+
+        case 4:
+            DisplayInventory(g->you);
             break;
             
         default:

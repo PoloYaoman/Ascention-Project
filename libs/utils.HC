@@ -9,30 +9,26 @@
 */
 
 
-U0* ReAlloc(U0* ptr, U64 new_size) {
+U8* ReAlloc(U8* ptr, U64 new_size) {
     // Reallocates a memory block to a new size
     // If ptr is NULL, behaves like MAlloc
 
     if (new_size == 0) {
+        "ReAlloc: new_size is 0";
         Free(ptr);
         return NULL;
     }
     
-    if (ptr == NULL) {
-        return MAlloc(new_size);
-    }
+    if (ptr == NULL)    return MAlloc(new_size);
     
     U64 old_size = MSize(ptr);
-    U0* new_ptr = MAlloc(new_size);
+    U8* new_ptr = MAlloc(new_size);
     
     if (new_ptr) {
         // Copy the minimum of old and new size
         U64 copy_size;
-        if (old_size <= new_size) {
-            copy_size = old_size;
-        } else {
-            copy_size = new_size;
-        }
+        if (old_size <= new_size)   copy_size = old_size;
+        else                        copy_size = new_size;
         MemCpy(new_ptr, ptr, copy_size);
         Free(ptr);
     }
@@ -53,9 +49,7 @@ U8* Concat (U8* s1, U8* s2) {
 U8* Find(U8* text, U8* ref) {
     // Returns pointer to the first character of ref in text
 
-    if (*ref == '\0') {
-        return NULL;
-    }
+    if (*ref == '\0')   return NULL;
 
     for (; *text!='\0'; text++) {
         U8* t = text;
@@ -64,9 +58,7 @@ U8* Find(U8* text, U8* ref) {
             t++; 
             r++;
         }
-        if (*r=='\0') {
-            return text;
-        }
+        if (*r=='\0')   return text;
     }
 
     return NULL;

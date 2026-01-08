@@ -5,7 +5,7 @@ Cd(__DIR__);;
 #include "classes/Game.HC"
 
 
-//Main------------------------//
+//Main------------------------//
 
 U0 Main() {
     CDC *dc = DCAlias;
@@ -14,7 +14,8 @@ U0 Main() {
     // Init new game
     Game* newGame = InitGame();
     if (newGame == NULL) {
-        "\nPath failed to start\n";
+        "\nPath failed to start\n";
+
         return;
     }
 

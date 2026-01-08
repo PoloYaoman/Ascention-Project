@@ -6,16 +6,11 @@
 
 /*
     Player controller
-    TODO inventory
 */
 
 
-// #include "classes/Game.HC"
 #include "classes/Object.HC"
 #include "classes/Room.HC"
-
-
-// class Game{};
 
 
 class Player {
@@ -42,9 +37,7 @@ U0 PlayerPickObject(Player* p, Object* obj) {
     } else if (p->right_hand == NULL) {
         p->right_hand = obj;
         "You pick up %s with your right hand\n", obj->name;
-    } else {
-        "\nYou don't have enough hands to carry that\n";
-    }
+    } else  "\nYou don't have enough hands to carry that\n";
 }
 
 
@@ -52,12 +45,13 @@ U0 DisplayInventory(Player* p) {
     // Displays player's inventory
 
     if (p != NULL) {
-        if (p->left_hand != NULL) {
-            "You are holding :\n\t%s in your left hand\n", p->left_hand->name;
-        } 
-        if (p->right_hand != NULL) {
-            "\t%s in your right hand\n", p->right_hand->name;
+        if (p->left_hand != NULL)   "You are holding :\n\t%s in your left hand\n", p->left_hand->name;
+        else {
+            "You are free of earthly posessions\n";
+            return;
         }
+
+        if (p->right_hand != NULL)  "\t%s in your right hand\n", p->right_hand->name;
     }
 }
 

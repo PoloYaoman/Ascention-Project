@@ -26,23 +26,6 @@ Object* initObject(U8* name, U8* desc = "\n") {
 }
 
 
-// Object** addObject(Object** list, Object* obj) {
-//     // Adds an object to an existing list
-
-//     Object** n_array;
-
-//     if (list != NULL) {
-//         n_array = MAlloc(MSize(list)+sizeof(Object*));
-//         MemCpy(n_array, list, MSize(list));
-//         MemCpy(n_array+MSize(list), &obj, sizeof(Object*));
-//     } else {
-//         n_array = MAlloc(sizeof(Object*));
-//         *n_array = obj;
-//     }
-
-//     return n_array;
-// }
-
 U0 addObject(Object*** list, Object* obj) {
     // Adds an object to an existing list
 

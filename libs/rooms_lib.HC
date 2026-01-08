@@ -11,10 +11,11 @@
 
 #include "classes/Room.HC"
 #include "libs/utils.HC"
-#include "libs/objects_lib"
+#include "libs/objects_lib.HC"
+#include "libs/people_lib.HC"
 
 
-#define NUM_ROOMS 3
+#define NUM_ROOMS 4
 
 
 U64* rooms[NUM_ROOMS] = {
@@ -22,7 +23,9 @@ U64* rooms[NUM_ROOMS] = {
 
     "Strange warmth envoleps you. You feel like you've already been here.\n",
 
-    "This room is so weirdly shaped that you can't quite count the number of corners in it. Near the wall to the right of you, you spot [o].\n"
+    "This room is so weirdly shaped that you can't quite count the number of corners in it. Near the wall to the right of you, you spot [o].\n",
+
+    "This room doesn't seem to have a ceiling, but you can't quite see the sky either. Closing the door behind you, you are startled by [c].\n"
 };
 
 
@@ -36,6 +39,7 @@ U0 GenRoomDescription(Room* r) {
         "\nThere are $$PURPLE$$two doors$$BLUE$$, opposite of each other.\n\n");
     r->description = desc;
     FillObjects(r);
+    FillCharacters(r);
 }
 
 
